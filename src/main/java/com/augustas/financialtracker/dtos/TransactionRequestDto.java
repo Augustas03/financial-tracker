@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class TransactionRequestDto {
 
-    @NotNull
+    @NotNull(message = "Description is required")
     public String description;
-    @NotNull
+    @NotNull(message = "Category is required")
     public Category category;
-    @NotNull
+    @NotNull(message = "Amount is required")
     private Double amount;
 }

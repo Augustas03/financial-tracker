@@ -1,11 +1,15 @@
 package com.augustas.financialtracker.services;
 
+import com.augustas.financialtracker.dtos.TransactionRequestDto;
 import com.augustas.financialtracker.entities.Transaction;
 import com.augustas.financialtracker.repositories.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -20,4 +24,25 @@ public class TransactionService {
 
     }
 
+    public Transaction createTransaction(TransactionRequestDto request){
+        var transaction = new Transaction();
+        transaction.setDescription(request.getDescription());
+        transaction.setAmount(request.getAmount());
+        transaction.setDate(LocalDateTime.now());
+        transaction.setCategory(request.getCategory());
+
+        return transactionRepository.save(transaction);
+    }
+
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    public Optional<Transaction> getTransaction(UUID id) {
+        return transactionRepository.findById(id);
+    }
+
+    public void deleteTransaction(UUID id) {
+        transactionRepository.deleteById(id);
+    }
 }
