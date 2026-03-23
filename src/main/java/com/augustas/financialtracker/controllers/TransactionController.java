@@ -43,8 +43,13 @@ public class TransactionController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/total-month")
+    public Double getMonthSpent(){
+        return transactionService.totalSpentThisMonth();
+    }
+
     @GetMapping("/total")
     public Double getTotalSpent(){
-        return transactionService.totalSpentThisMonth();
+        return transactionService.totalSpent();
     }
 }

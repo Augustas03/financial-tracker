@@ -7,6 +7,7 @@ import com.augustas.financialtracker.repositories.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,20 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     public Double totalSpentThisMonth(){
+
+        var firstDayOfMonth = LocalDateTime.now()
+                .withDayOfMonth(1)
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0);
+
+        return transactionRepository.findByDateAfter(firstDayOfMonth)
+                .stream()
+                .mapToDouble(Transaction::getAmount)
+                .sum();
+    }
+
+    public Double totalSpent(){
 
         List<Transaction> transactions = transactionRepository.findAll();
 
