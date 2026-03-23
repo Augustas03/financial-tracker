@@ -1,6 +1,7 @@
 package com.augustas.financialtracker.controllers;
 
 import com.augustas.financialtracker.dtos.TransactionRequestDto;
+import com.augustas.financialtracker.dtos.TransactionResponseDto;
 import com.augustas.financialtracker.entities.Transaction;
 import com.augustas.financialtracker.repositories.TransactionRepository;
 import com.augustas.financialtracker.services.TransactionService;
@@ -17,20 +18,30 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
-    private final TransactionRepository transactionRepository;
     private final TransactionService transactionService;
 
-    @PostMapping
-    public ResponseEntity<Transaction> createTransaction (
+    @PostMapping("/{id}")
+    public ResponseEntity<TransactionResponseDto> createTransaction (
+            @PathVariable UUID id,
             @Valid @RequestBody TransactionRequestDto request
     ){
-        return ResponseEntity.ok().body(transactionService.createTransaction(request));
+        return ResponseEntity.ok().body(transactionService.createTransaction(request, id));
     }
 
     @GetMapping
     public ResponseEntity<List<Transaction>> getTransactions(){
 
         List<Transaction> transactions = transactionService.getAllTransactions();
+
+        return ResponseEntity.ok().body(transactions);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<TransactionResponseDto>> getTransactionByUserId(
+            @PathVariable UUID id
+    ){
+
+        List<TransactionResponseDto> transactions = transactionService.getAllTransactionsByUserId(id);
 
         return ResponseEntity.ok().body(transactions);
     }

@@ -2,6 +2,8 @@ package com.augustas.financialtracker.repositories;
 
 import com.augustas.financialtracker.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -11,4 +13,7 @@ import java.util.UUID;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
     List<Transaction> findByDateAfter(LocalDateTime thisMonth);
+
+    @Query("SELECT o FROM Transaction o WHERE o.user.id = :id")
+    List<Transaction> findTransactionsForUser(@Param("id") UUID id);
 }

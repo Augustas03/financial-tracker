@@ -14,9 +14,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleNotFound(ResourceNotFoundException ex) {
+        return getObjectResponseEntity(ex.getMessage(), ex);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFound(UserNotFoundException ex) {
+        return getObjectResponseEntity(ex.getMessage(), ex);
+    }
+
+    private ResponseEntity<Object> getObjectResponseEntity(String message, Exception ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", ex.getMessage());
+        body.put("message", message);
         body.put("status", HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
