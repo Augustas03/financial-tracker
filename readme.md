@@ -14,7 +14,6 @@ A RESTful API built with Spring Boot to manage and track personal expenses using
 | DELETE | `/api/transactions/{id}`        | Delete a specific transaction     |
 | GET    | `/api/transactions/total-month` | Calculate total for current month |
 | GET    | `/api/transactions/total`       | Calculate total for all time      |
-
 | GET    | `/users`                        | create a user                     |
 | GET    | `/users/{id}`                   | get a user for given id           |
 
