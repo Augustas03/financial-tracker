@@ -39,13 +39,8 @@ public class TransactionController {
     public ResponseEntity<?> removeTransaction (
             @PathVariable(name = "id") UUID id
     ){
-
-        if(transactionService.getTransaction(id).isPresent()){
-            transactionService.deleteTransaction(id);
-            return ResponseEntity.ok().build();
-        }
-
-        return ResponseEntity.notFound().build();
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/total")

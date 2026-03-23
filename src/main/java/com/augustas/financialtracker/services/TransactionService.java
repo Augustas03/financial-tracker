@@ -2,6 +2,7 @@ package com.augustas.financialtracker.services;
 
 import com.augustas.financialtracker.dtos.TransactionRequestDto;
 import com.augustas.financialtracker.entities.Transaction;
+import com.augustas.financialtracker.exceptions.ResourceNotFoundException;
 import com.augustas.financialtracker.repositories.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,9 @@ public class TransactionService {
     }
 
     public void deleteTransaction(UUID id) {
+        if(!transactionRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Transaction not found");
+        }
         transactionRepository.deleteById(id);
     }
 }
